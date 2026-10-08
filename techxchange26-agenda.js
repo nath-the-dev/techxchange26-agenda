@@ -219,9 +219,14 @@
 
     // The page
     return `<!doctype html><meta charset="utf-8"><title>TechXchange 2026 agenda</title>
-<style>body{font:14px/1.4 system-ui,sans-serif;margin:24px;color:#161616}h2{margin:28px 0 8px}
-table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid #ddd;padding:6px 8px;text-align:left;vertical-align:top}
-th{background:#f2f2f2}td.t{white-space:nowrap}tr.clash td{background:#fff3cd}p.meta{color:#555}a{color:#0f62fe}</style>
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark">
+<style>:root{--fg:#161616;--bg:#fff;--muted:#555;--line:#ddd;--head:#f2f2f2;--clash:#fff3cd;--link:#0f62fe}
+@media (prefers-color-scheme:dark){:root{--fg:#e8e8e8;--bg:#161616;--muted:#a8a8a8;--line:#393939;--head:#262626;--clash:#4a3b00;--link:#78a9ff}}
+body{font:14px/1.4 system-ui,sans-serif;margin:24px;color:var(--fg);background:var(--bg)}h2{margin:28px 0 8px}
+table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--head)}td.t{white-space:nowrap}tr.clash td{background:var(--clash)}p.meta{color:var(--muted)}a{color:var(--link)}
+@media (max-width:640px){body{margin:16px}table,tbody,tr,td{display:block}th{display:none}
+tr{border-bottom:1px solid var(--line);padding:8px 6px}td{border:0;padding:2px 0}td.t{font-weight:600}tr.clash{background:var(--clash)}}</style>
 <h1>TechXchange 2026 agenda</h1>
 <p class="meta">${favs.length} favourites, ${chosen.length} with a time, ${clashing} in clashes (highlighted), ${untimed.length} with no time yet.
 Times are event local (UTC${offset < 0 ? '' : '+'}${offset}). Built ${esc(new Date().toLocaleString())}.</p>
