@@ -13,7 +13,7 @@ This script reads your favourites and downloads two files:
 2. On that page, open the browser console: Cmd+Opt+K in Firefox, Cmd+Opt+J in Chrome (Ctrl+Shift+K or Ctrl+Shift+J on Windows).
 3. Paste the script and press Enter. The first time, the browser asks you to type `allow pasting`.
 
-Both files download, and the console prints a summary table. If the browser asks whether to allow multiple downloads, allow it.
+The console shows each step as it runs. Both files then download, and the console prints a summary table. If the browser asks whether to allow multiple downloads, allow it.
 
 ## What it does
 

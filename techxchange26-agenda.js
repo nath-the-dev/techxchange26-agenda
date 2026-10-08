@@ -12,6 +12,8 @@
   };
   // A favourite's session ID, whichever form myData sends it in
   const idOf = x => typeof x === 'string' ? x : x.sessionID || x.sessionId || x.id;
+  // One progress line in the console
+  const step = msg => console.log('techxchange26-agenda: ' + msg);
 
   /**
    * Builds the agenda page and calendar file from your favourites, and downloads both.
@@ -23,14 +25,18 @@
 
     // Read your favourites and the whole catalogue
     const token = signInToken();
+    step('Reading your favourites');
     const fav = await readFavourites(token);
+    step(`Found ${fav.ids.size} favourites. Reading the catalogue`);
     const catalogue = await readCatalogue(token);
+    step(`Read ${catalogue.length} sessions`);
 
     // Match them up, then pick a time for each
     const { favs, missing } = await matchFavourites(fav, catalogue, token);
     const plan = { favs, missing, ...planSlots(favs) };
 
     // Build both files and download them
+    step('Building the agenda page and calendar file');
     const html = agendaPage(plan);
     const ics = calendarFile(plan.chosen);
     download('techxchange26-agenda.html', 'text/html', html);
@@ -130,7 +136,9 @@
     const missing = [];
 
     // Look up each one it does not
-    for (const id of [...fav.ids].filter(id => !favs.some(s => s.sessionID === id))) {
+    const unlisted = [...fav.ids].filter(id => !favs.some(s => s.sessionID === id));
+    if (unlisted.length) step(`Looking up ${unlisted.length} favourites the catalogue does not list`);
+    for (const id of unlisted) {
       const r = await post('session', 'id=' + encodeURIComponent(id), token).catch(e => ({ responseMessage: e.message }));
       const e = fav.entries.find(x => x && idOf(x) === id) || {};
 
